@@ -4,17 +4,43 @@
     <meta charset="UTF-8">
     <title>Controllers</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
     <script src="js/jquery-2.1.1.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="styles/mainStyle.css"/>
+
 </head>
 <body>
 
-<div ng-controller="myCtrl">
-    <span id="span" ng-style="myStyle">Sample Text</span>
-    <input type="button" value="Change Color" ng-click="changeColor()">
-    <br>
-    {{ myStyle | json }}
+
+<div id="tables" ng-controller="myCtrl">
+    <table>
+        <tbody>
+        <tr class="filmStyle" ng-repeat="film in  films">
+            <td>
+                <a href="{{film.url}}">
+                    <div>
+                        <img src="{{film.imageUrl}}" alt="{{film.name}}">
+                        <br>
+                        <span class="b-poster-tile__title-short">{{film.name}}</span>
+                        <br>
+                        {{"Оригинальное название: " + film.originalName}}        </span>
+                        <br>
+                        <span class="b-poster-tile__title-info-vote-positive">{{"Проголосовали: " + film.rates}}</span>
+                        <br>
+                        <span class="b-poster-tile__title-info-vote-positive">{{"Страна: " + film.countries}}</span>
+                        <br>
+                        <span class="b-poster-tile__title-info-vote-positive">{{"Жанр: " + film.genres}}</span>
+                        <br>
+                        <span class="b-poster-tile__title-info-vote-positive">{{"Год: " + film.year}}</span>
+                        <br>
+                    </div>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+
 
 </body>
 </html>
