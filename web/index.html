@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Controllers</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <script src="js/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+
+<div ng-controller="myCtrl">
+    <span id="span" ng-style="myStyle">Sample Text</span>
+    <input type="button" value="Change Color" ng-click="changeColor()">
+    <br>
+    {{ myStyle | json }}
+</div>
+
+</body>
+</html>
