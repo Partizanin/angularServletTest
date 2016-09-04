@@ -9,6 +9,6 @@ app.controller("myCtrl", function ($scope, $http) {
         method: 'GET'
     }).success(function (data) {
         /** @namespace data.films */
-        $scope.films = data.films;
+        $scope.films = data;
     });
 });

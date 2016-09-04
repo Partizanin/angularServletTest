@@ -31,7 +31,7 @@ public class Servlet extends HttpServlet {
 
 
 //        JSONObject catchObject = new JSONObject();
-        JSONObject sendObject = films.getFilmsJson(10);
+        JSONObject sendObject = films.getFilmsJson(15);
 
 //        String requestValue = "";
 //

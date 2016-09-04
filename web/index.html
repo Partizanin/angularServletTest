@@ -35,9 +35,9 @@
 </div>
 
 <div id="tables" ng-controller="myCtrl">
-    <table>
+    <table ng-repeat="myFilm in  films">
         <tbody>
-        <tr class="filmStyle" ng-repeat="film in  films">
+        <tr class="filmStyle" ng-repeat="film in myFilm">
             <td>
                 <a href="{{film.url}}">
                     <div class="filmDiv">

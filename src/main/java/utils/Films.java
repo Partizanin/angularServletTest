@@ -27,11 +27,29 @@ public class Films {
 
         JSONArray array = new JSONArray();
 
-        result.put("films", array);
+        ArrayList<Film> films = getFilms(filmCount);
 
-        for (Film film : getFilms(filmCount)) {
-            array.put(new JSONObject(film));
+        for (int i = 0; i < 5; i++) {
+            array.put(new JSONObject(films.get(i)));
         }
+
+        result.put("films1", array);
+        array = new JSONArray();
+
+        for (int i = 5; i < 10; i++) {
+
+            array.put(new JSONObject(films.get(i)));
+        }
+
+        result.put("films2", array);
+        array = new JSONArray();
+
+        for (int i = 10; i < 15; i++) {
+
+            array.put(new JSONObject(films.get(i)));
+        }
+
+        result.put("films3", array);
 
         return result;
     }
@@ -53,7 +71,7 @@ public class Films {
         }
 
         while (films.size() != filmCount) {
-            films.remove(0);
+            films.remove(films.size() - 1);
         }
 
         films.sort(Comparator.comparing(Film::getRates).reversed());
