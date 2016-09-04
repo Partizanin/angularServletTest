@@ -11,6 +11,25 @@
 </head>
 <body>
 
+<div class="controlPanel">
+    <input type="text" id="filter" placeholder="Поиск">
+
+    <select id="yearSelector" title="genreSelector">
+        <option>2016</option>
+        <option>2015</option>
+    </select>
+
+    <select id="genreSelector" title="genreSelector">
+        <option>Ужасы</option>
+        <option>Документальные</option>
+    </select>
+
+    <select id="countrySelector" title="countrySelector">
+        <option>США</option>
+        <option>Австралия</option>
+        <option>Германия</option>
+    </select>
+</div>
 
 <div id="tables" ng-controller="myCtrl">
     <table>
@@ -18,12 +37,12 @@
         <tr class="filmStyle" ng-repeat="film in  films">
             <td>
                 <a href="{{film.url}}">
-                    <div>
+                    <div class="filmDiv">
                         <img src="{{film.imageUrl}}" alt="{{film.name}}">
                         <br>
                         <span class="b-poster-tile__title-short">{{film.name}}</span>
                         <br>
-                        {{"Оригинальное название: " + film.originalName}}        </span>
+                        <span>{{"Оригинальное название: " + film.originalName}}</span>
                         <br>
                         <span class="b-poster-tile__title-info-vote-positive">{{"Проголосовали: " + film.rates}}</span>
                         <br>
