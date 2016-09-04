@@ -1,9 +1,11 @@
 package utils;
 
-import org.json.JSONException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Created with Intellij IDEA.
@@ -14,41 +16,60 @@ import java.io.*;
  */
 public class WriteReadJsonObjects {
 
-    public static void main(String[] args) {
-        WriteReadJsonObjects writeReadJsonObjects = new WriteReadJsonObjects();
+    private final String FILPATH = "D:\\Illia\\Java\\Projects\\angularServletTest\\src\\main\\resources\\data.json";
 
+    /*todo: якщо в файлі фільми з датами оновлення більше ніж місяць то їх потрібно всі оновити*/
+    public ArrayList<Film> getFilmsFromFile() {
+        ArrayList<Film> films = new ArrayList<>();
 
+        JSONObject jsonObject = readObjectFromFile();
+        JSONArray jsonArray = jsonObject.getJSONArray("films");
+
+        for (Object film : jsonArray) {
+            films.add(new Film((JSONObject) film));
+        }
+
+        return films;
     }
-/*todo: якщо в файлі фільми з датами оновлення більше ніж місяць то їх потрібно всі оновити*/
 
-    public void writeObjectsToFile() {
+    public JSONObject getFilmsFromFileJson() {
+        return readObjectFromFile();
+    }
+
+    public void writeObjectsToFile(ArrayList<Film> films) {
         /*Метод не перезаписує все а тільки дописує нове*/
+        ArrayList<Film> sortedFilms = new ArrayList<>();
+        sortedFilms.addAll(films);
+        sortedFilms.addAll(getFilmsFromFile());
+        sortedFilms.sort(Comparator.comparing(Film::getRates).reversed());
 
         JSONObject jsonObject = readObjectFromFile();
 
+        jsonObject = jsonObject.put("films", new JSONArray());
 
-        try {
-            jsonObject = jsonObject.put("filmsCount", "12");
-        } catch (JSONException e) {
-            e.printStackTrace();
+        for (Film film : sortedFilms) {
+            jsonObject.getJSONArray("films").put(new JSONObject(film));
         }
 
+
+        jsonObject = jsonObject.put("filmsCount", jsonObject.getJSONArray("films").length());
+        Writer out = null;
         try {
-            FileWriter file = new FileWriter("D:\\Illia\\Java\\Projects\\angularSevletTest\\src\\main\\resources\\data.json");
-            file.write(jsonObject.toString());
-            file.flush();
-            file.close();
+            out = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(FILPATH), "UTF-8"));
+            out.write(jsonObject.toString());
+            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public JSONObject readObjectFromFile() {
+    private JSONObject readObjectFromFile() {
         StringBuilder sb = new StringBuilder();
         String line = null;
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(new File("D:\\Illia\\Java\\Projects\\angularSevletTest\\src\\main\\resources\\data.json")), "UTF8"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(FILPATH)), "UTF8"));
+
             line = br.readLine();
 
             while (line != null) {
@@ -61,6 +82,45 @@ public class WriteReadJsonObjects {
         return new JSONObject(sb.toString());
     }
 
+    public ArrayList<Film> compareFilms(ArrayList<Film> filmsFromFile, ArrayList<Film> newFilms) {
+        ArrayList<Film> result = new ArrayList<>();
+        ArrayList<Film> onlyNewFilms = new ArrayList<>();
+
+        result.addAll(filmsFromFile);
+        boolean notEqual = true;
+        if (filmsFromFile.size() > 1) {
+
+            for (Film newFilm : newFilms) {
+
+                if (!result.contains(newFilm)) {
+
+                    for (Film film : filmsFromFile) {
+
+                        if (film.getName().equals(newFilm.getName()) && film.getYear().equals(newFilm.getName())) {
+                            result.remove(film);
+                            result.add(newFilm);
+                            notEqual = false;
+                            break;
+                        }
+                    }
+                    if (notEqual) {
+                        result.add(newFilm);
+                        onlyNewFilms.add(newFilm);
+                    }
+                    notEqual = true;
+                }
+            }
+        } else {
+            result.addAll(newFilms);
+            onlyNewFilms.addAll(newFilms);
+        }
+
+        if (onlyNewFilms.size() >= 1) {
+            onlyNewFilms.sort(Comparator.comparing(Film::getRates).reversed());
+            writeObjectsToFile(onlyNewFilms);
+        }
+        return result;
+    }
 
 }
 

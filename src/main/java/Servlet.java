@@ -1,5 +1,5 @@
 import org.json.JSONObject;
-import utils.WriteReadJsonObjects;
+import utils.Films;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,14 +24,15 @@ public class Servlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        WriteReadJsonObjects wro = new WriteReadJsonObjects();
+        Films films = new Films();
         response.setContentType("text/plain; charset=utf-8");
         response.setCharacterEncoding("UTF-8");
         PrintWriter writer = response.getWriter();
 
 
 //        JSONObject catchObject = new JSONObject();
-        JSONObject sendObject = wro.readObjectFromFile();
+        JSONObject sendObject = films.getFilmsJson(10);
+
 //        String requestValue = "";
 //
 //        try {
