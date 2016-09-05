@@ -18,7 +18,7 @@
 <body ng-controller="filmsController">
 
 <div class="controlPanel">
-    <input type="text" id="filter" placeholder="Поиск">
+    <input type="text" id="filter" placeholder="Поиск" ng-model="query">
 
     <select id="yearSelector" title="genreSelector">
         <option>Все</option>
@@ -45,7 +45,7 @@
 <div id="tables">
     <table ng-repeat="myFilm in  films">
         <tbody>
-        <tr class="filmStyle" ng-repeat="film in myFilm">
+        <tr class="filmStyle" ng-repeat="film in myFilm | filter:query">
             <td>
                 <a href="{{film.url}}">
                     <div class="filmDiv">
