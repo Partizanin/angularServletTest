@@ -50,9 +50,12 @@ public class WriteReadJsonObjects {
         for (Film film : sortedFilms) {
             jsonObject.getJSONArray("films").put(new JSONObject(film));
         }
+        int filmsCount = jsonObject.getJSONArray("films").length();
 
+        System.out.println("filmsCount: " + filmsCount);
 
-        jsonObject = jsonObject.put("filmsCount", jsonObject.getJSONArray("films").length());
+        jsonObject = jsonObject.put("filmsCount", filmsCount);
+
         Writer out = null;
         try {
             out = new BufferedWriter(new OutputStreamWriter(

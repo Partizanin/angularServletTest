@@ -18,21 +18,38 @@ import java.io.PrintWriter;
  */
 @WebServlet(name = "Servlet", urlPatterns = "/Servlet")
 public class Servlet extends HttpServlet {
+    private Films films = new Films();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Films films = new Films();
         response.setContentType("text/plain; charset=utf-8");
         response.setCharacterEncoding("UTF-8");
         PrintWriter writer = response.getWriter();
 
-        JSONObject sendObject = films.getFilmsJsonByPage(Integer.parseInt(request.getParameter("page")));
+        JSONObject catchObject = new JSONObject(request.getParameter("jsonData"));
+
+        JSONObject sendObject = getSendObject(catchObject);
 
         writer.println(sendObject);
         writer.flush();
+    }
+
+    private JSONObject getSendObject(JSONObject catchObject) {
+
+        JSONObject result = new JSONObject();
+
+        String operation = catchObject.getString("operationCall");
+        int page = catchObject.getInt("page");
+
+        if (operation.equals("getData")) {
+            result.put("films", films.getFilmsJsonByPage(page));
+            result.put("pagesCount", films.getPagesCounts());
+        }
+
+        return result;
     }
 
 }

@@ -6,11 +6,16 @@ var app = angular.module("app", ['ui.bootstrap']);
 app.controller("filmsController", function ($scope, $http, $anchorScroll) {
     $scope.currentPage = 1;
     $scope.numPerPage = 10;
-    $scope.maxSize = 5;
+    $scope.maxSize = 10;
     $scope.pagesCoutns = 1000;
 
     $scope.$watch('currentPage + numPerPage', function () {
         var currentPage = $scope.currentPage;
+
+        var sendData = {
+            page: currentPage,
+            operationCall: "getData"
+        };
 
         console.log("currentPage: " + currentPage);
         $scope.loaderStatys = true;
@@ -19,12 +24,14 @@ app.controller("filmsController", function ($scope, $http, $anchorScroll) {
             url: '/Servlet',
             method: 'GET',
             params: {
-                page: currentPage
+                jsonData: JSON.stringify(sendData)
             }
         }).success(function (data) {
             /** @namespace data.films */
-            $scope.films = data;
+            /** @namespace data.pagesCount */
+            $scope.films = data.films;
             $scope.loaderStatys = false;
+            $scope.pagesCoutns = data.pagesCount * 10;
             $anchorScroll();
         });
 
