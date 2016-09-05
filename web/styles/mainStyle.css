@@ -79,15 +79,6 @@ span {
     margin: 3px;
 }
 
-/*
-.filmStyle {
-    border: 1px double #acacac; !* Параметры границы *!
-    float: left;
-    padding: 10px; !* Поля вокруг текста *!
-    margin: 3px;
-}
-*/
-
 /*loader style Start*/
 #loader-wrapper {
     position: fixed;

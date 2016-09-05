@@ -13,6 +13,7 @@ app.controller("filmsController", function ($scope, $http, $anchorScroll) {
         var currentPage = $scope.currentPage;
 
         console.log("currentPage: " + currentPage);
+        $scope.loaderStatys = true;
 
         $http({
             url: '/Servlet',
@@ -23,6 +24,7 @@ app.controller("filmsController", function ($scope, $http, $anchorScroll) {
         }).success(function (data) {
             /** @namespace data.films */
             $scope.films = data;
+            $scope.loaderStatys = false;
             $anchorScroll();
         });
 

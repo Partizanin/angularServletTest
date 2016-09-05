@@ -122,6 +122,13 @@ public class WriteReadJsonObjects {
         return result;
     }
 
+    public int getFilmsCount() {
+
+        int filmsCount = readObjectFromFile().getInt("filmsCount");
+
+        return filmsCount;
+    }
+
 }
 
 

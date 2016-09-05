@@ -39,7 +39,9 @@
         <option>Германия</option>
     </select>
 </div>
-
+<div ng-show="loaderStatys" id="loader-wrapper">
+    <div id="loader"></div>
+</div>
 <div id="tables">
     <table ng-repeat="myFilm in  films">
         <tbody>

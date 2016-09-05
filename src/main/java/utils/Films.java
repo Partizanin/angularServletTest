@@ -19,11 +19,8 @@ public class Films {
 
     public static void main(String[] args) {
         Films films = new Films();
-        JSONObject jsonFilms = films.getFilmsJsonByPage(1);
 
-        System.out.println(jsonFilms.getJSONArray("films 5").length());
-        System.out.println(jsonFilms.getJSONArray("films 10").length());
-        System.out.println(jsonFilms.getJSONArray("films 15").length());
+        System.out.println(films.getPagesCounts());
     }
 
     public JSONObject getFilmsJson(int filmCount) {
@@ -126,5 +123,10 @@ public class Films {
         result[0] = start;
         result[1] = end;
         return result;
+    }
+
+    public int getPagesCounts() {
+        int result = writeReadJsonObjects.getFilmsCount() / 15;
+        return result + 1;
     }
 }
