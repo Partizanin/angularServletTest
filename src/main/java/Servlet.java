@@ -29,53 +29,10 @@ public class Servlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter writer = response.getWriter();
 
-
-//        JSONObject catchObject = new JSONObject();
-        JSONObject sendObject = films.getFilmsJson(15);
-
-//        String requestValue = "";
-//
-//        try {
-//            if (request.getParameter("jsonData") != null) {
-//                catchObject = new JSONObject(request.getParameter("jsonData"));
-//
-//                requestValue = catchObject.getString("color");
-//                System.out.println(requestValue);
-//            }
-//
-//            sendObject = getColor(requestValue);
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+        JSONObject sendObject = films.getFilmsJsonByPage(Integer.parseInt(request.getParameter("page")));
 
         writer.println(sendObject);
         writer.flush();
     }
 
-//    private JSONObject getColor(String requestValue) {
-//        JSONObject result = new JSONObject();
-//        String color = "red";
-//        try {
-//            switch (requestValue) {
-//                case "rgb(255, 0, 0)":
-//                    color = "chartreuse";
-//                    break;
-//                case "rgb(127, 255, 0)":
-//                    color = "blue";
-//                    break;
-//                case "rgb(0, 0, 255)":
-//                    color = "yellow";
-//                    break;
-//                default:
-//                    color = "red";
-//            }
-//
-//            result.append("color", color);
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        return result;
-//    }
 }

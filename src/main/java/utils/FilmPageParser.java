@@ -174,7 +174,7 @@ public class FilmPageParser {
             result++;
         }
 
-
+/*Повертає номер торінки за порядковим номером фільму який потрібен*/
         return result;
     }
 
