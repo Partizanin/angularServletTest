@@ -16,7 +16,12 @@ import java.util.Comparator;
  */
 public class WriteReadJsonObjects {
 
-    private final String FILPATH = "D:\\Illia\\Java\\Projects\\angularServletTest\\src\\main\\resources\\data.json";
+    private String FILEPATH = ""/*"D:\\Illia\\Java\\Projects\\angularServletTest\\web\\data\\data.json"*/;
+
+    public WriteReadJsonObjects(String dataFilePath) {
+
+        FILEPATH = dataFilePath;
+    }
 
     /*todo: якщо в файлі фільми з датами оновлення більше ніж місяць то їх потрібно всі оновити*/
     public ArrayList<Film> getFilmsFromFile() {
@@ -59,7 +64,7 @@ public class WriteReadJsonObjects {
         Writer out = null;
         try {
             out = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(FILPATH), "UTF-8"));
+                    new FileOutputStream(FILEPATH), "UTF-8"));
             out.write(jsonObject.toString());
             out.close();
         } catch (IOException e) {
@@ -70,8 +75,9 @@ public class WriteReadJsonObjects {
     private JSONObject readObjectFromFile() {
         StringBuilder sb = new StringBuilder();
         String line = null;
+        BufferedReader br = null;
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(FILPATH)), "UTF8"));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(FILEPATH)), "UTF8"));
 
             line = br.readLine();
 
@@ -81,6 +87,13 @@ public class WriteReadJsonObjects {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                assert br != null;
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return new JSONObject(sb.toString());
     }

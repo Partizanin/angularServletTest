@@ -18,13 +18,15 @@ import java.io.PrintWriter;
  */
 @WebServlet(name = "Servlet", urlPatterns = "/Servlet")
 public class Servlet extends HttpServlet {
-    private Films films = new Films();
+    private Films films;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        films = new Films(getServletContext().getRealPath("/data/data.json"));
+
         response.setContentType("text/plain; charset=utf-8");
         response.setCharacterEncoding("UTF-8");
         PrintWriter writer = response.getWriter();

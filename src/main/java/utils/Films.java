@@ -14,8 +14,15 @@ import java.util.Comparator;
  * To change this template use File|Setting|Editor|File and Code Templates.
  */
 public class Films {
-    private WriteReadJsonObjects writeReadJsonObjects = new WriteReadJsonObjects();
+    private WriteReadJsonObjects writeReadJsonObjects;
     private FilmPageParser filmPageParser = new FilmPageParser();
+
+    public Films() {
+    }
+
+    public Films(String dataFilePath) {
+        writeReadJsonObjects = new WriteReadJsonObjects(dataFilePath);
+    }
 
     public static void main(String[] args) {
         Films films = new Films();
