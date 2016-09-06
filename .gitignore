@@ -3,4 +3,4 @@ out
 .idea
 *iml
 target
-src/main/resources/data.json
+data.json
